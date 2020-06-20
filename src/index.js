@@ -33,6 +33,8 @@ class NoSleep {
     } else if (oldIOS) {
       this.noSleepTimer = null;
     } else {
+          alert('building video')
+
       // Set up no sleep video element
       this.noSleepVideo = document.createElement("video");
 
@@ -45,9 +47,13 @@ class NoSleep {
       this.noSleepVideo.addEventListener("loadedmetadata", () => {
         if (this.noSleepVideo.duration <= 1) {
           // webm source
+                    alert('webm loop video')
+
           this.noSleepVideo.setAttribute("loop", "");
         } else {
           // mp4 source
+                              alert('mp4 loop video')
+
           this.noSleepVideo.addEventListener("timeupdate", () => {
             if (this.noSleepVideo.currentTime > 0.5) {
               this.noSleepVideo.currentTime = Math.random();
@@ -67,6 +73,8 @@ class NoSleep {
 
   enable() {
     if (nativeWakeLock) {
+            alert('native')
+
       navigator.wakeLock
         .request("screen")
         .then((wakeLock) => {
@@ -83,6 +91,8 @@ class NoSleep {
           console.error(`${err.name}, ${err.message}`);
         });
     } else if (oldIOS) {
+                  alert('old ios')
+
       this.disable();
       console.warn(`
         NoSleep enabled for older iOS devices. This can interrupt
@@ -96,11 +106,13 @@ class NoSleep {
         }
       }, 15000);
     } else {
+      alert('playing')
       this.noSleepVideo.play();
     }
   }
 
   disable() {
+    alert('disabling')
     if (nativeWakeLock) {
       this._wakeLock.release();
       this._wakeLock = null;
